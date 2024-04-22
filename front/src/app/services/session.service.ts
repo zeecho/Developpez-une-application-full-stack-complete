@@ -12,6 +12,15 @@ export class SessionService {
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
+  constructor() {
+    const sessionData = localStorage.getItem('session');
+    if (sessionData) {
+      this.sessionInformation = JSON.parse(sessionData);
+      this.isLogged = true;
+      this.next();
+    }
+  }
+
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
   }
@@ -20,12 +29,14 @@ export class SessionService {
     this.sessionInformation = user;
     this.isLogged = true;
     this.next();
+    localStorage.setItem('session', JSON.stringify(user));
   }
 
   public logOut(): void {
     this.sessionInformation = undefined;
     this.isLogged = false;
     this.next();
+    localStorage.removeItem('session');
   }
 
   private next(): void {
