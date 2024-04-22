@@ -10,7 +10,6 @@ import { RegisterRequest } from '../../interfaces/registerRequest.interface';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-
   public onError = false;
 
   public form = this.fb.group({
@@ -33,7 +32,8 @@ export class RegisterComponent {
       '',
       [
         Validators.required,
-        Validators.min(4)
+        Validators.min(8),
+        Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=-_?!])(?!.*\s).*$/)
       ]
     ]
   });
