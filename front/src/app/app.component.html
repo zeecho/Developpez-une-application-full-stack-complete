@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<div class="app">
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" *ngIf="!isHomeRoute()">
+    <!-- <div>
+      <a routerLink="/">
+        <div>
+          <img src="/assets/logo_p6.png" alt="logo" style="max-height: 100% !important;"/>
+        </div>
+      </a>
+    </div> -->
+    <img src="/assets/logo_p6.png" alt="logo" routerLink="/" class="link logo-toolbar" />
+    <div *ngIf="$isLogged() | async;">
+      <span routerLink="sessions" class="link">Articles</span>
+      <span routerLink="me" class="link">Thèmes</span>
+      <span (click)="logout()" class="link">Bonhomme</span>
+    </div>
+  </mat-toolbar>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
