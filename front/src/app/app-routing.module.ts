@@ -11,6 +11,11 @@ const routes: Routes = [
     canActivate: [HomeRedirectGuard, UnauthGuard],
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'articles',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/articles/articles.module').then(m => m.ArticleModule)
+  },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }
 ];
