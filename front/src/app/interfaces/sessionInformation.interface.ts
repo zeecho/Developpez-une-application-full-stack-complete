@@ -4,5 +4,6 @@ export interface SessionInformation {
   type: string;
   id: number;
   username: string;
+  email: string;
   admin: boolean;
 }

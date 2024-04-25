@@ -7,51 +7,32 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "User", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "Topic")
 @Data
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User {
+public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
-    @Size(max = 50)
-    @Email
-    private String email;
+    @Size(max = 255)
+    private String title;
 
     @NonNull
-    @Size(max = 50)
-    private String username;
-
-    @NonNull
-    @Size(max = 120)
-    private String password;
-
-    @NonNull
-    private boolean admin;
-    
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "Subscriptions",
-            joinColumns = @JoinColumn( name = "user_id" ),
-            inverseJoinColumns = @JoinColumn( name = "topic_id" ) )
-    private List<Topic> topics;
+    @Size(max = 255)
+    private String description;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

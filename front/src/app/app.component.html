@@ -3,7 +3,7 @@
     <img src="/assets/logo_p6.png" alt="logo" routerLink="/" class="link logo-toolbar" />
     <div *ngIf="$isLogged() | async;">
       <span routerLink="articles" class="link">Articles</span>
-      <span routerLink="themes" class="link">Thèmes</span>
+      <span routerLink="topics" class="link">Thèmes</span>
       <span routerLink="profile" class="link">Profil</span>
       <span (click)="logout()" class="link">Logout</span>
     </div>

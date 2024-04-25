@@ -9,6 +9,7 @@ import lombok.NonNull;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -32,6 +33,8 @@ public class UserDto {
     @NonNull
     private boolean admin;
 
+    private List<Long> topics;
+    
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
