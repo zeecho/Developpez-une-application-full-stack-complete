@@ -15,7 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 export class TopicListComponent {
   public topics$: Observable<Topic[]> = this.topicService.all();
 
-  public topic: Topic | undefined;
+  // public topic: Topic | undefined;
 
   public isSubscribed: boolean[] = [];
 

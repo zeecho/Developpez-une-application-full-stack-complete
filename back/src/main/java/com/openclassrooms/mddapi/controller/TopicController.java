@@ -45,35 +45,52 @@ public class TopicController {
 
         return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     }
+
+    @GetMapping("/subscribed/{userId}")
+    public ResponseEntity<List<TopicDto>> findSubscribedTopicsByUserId(@PathVariable("userId") String userId) throws Exception {
+    	try {
+    		List<Topic> topics = this.topicService.findSubscribedTopicsByUserId(Long.parseLong(userId));
+    		return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
+    	} catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+		}
+    }
     
     @PostMapping("{id}/subscribe/{userId}")
-    public ResponseEntity<?> participate(@PathVariable("id") String id, @PathVariable("userId") String userId) throws Exception {
+    public ResponseEntity<?> subscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) throws Exception {
         try {
-        	try {
-        		this.topicService.subscribe(Long.parseLong(id), Long.parseLong(userId));
-        	} catch (Exception e){
-        		throw e;
-        	}
+    		this.topicService.subscribe(Long.parseLong(id), Long.parseLong(userId));
 
             return ResponseEntity.ok().build();
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    @PostMapping("{id}/unsubscribe/{userId}")
+    public ResponseEntity<?> unsubscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) throws Exception {
         try {
-            Topic topic = this.topicService.findById(id);
+    		this.topicService.unsubscribe(Long.parseLong(id), Long.parseLong(userId));
 
-            if (topic == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            this.topicService.delete(id);
             return ResponseEntity.ok().build();
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+//        try {
+//            Topic topic = this.topicService.findById(id);
+//
+//            if (topic == null) {
+//                return ResponseEntity.notFound().build();
+//            }
+//
+//            this.topicService.delete(id);
+//            return ResponseEntity.ok().build();
+//        } catch (NumberFormatException e) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 }

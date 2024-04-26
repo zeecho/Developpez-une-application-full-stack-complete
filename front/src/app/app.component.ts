@@ -20,11 +20,6 @@ export class AppComponent {
     return this.sessionService.$isLogged();
   }
 
-  public logout(): void {
-    this.sessionService.logOut();
-    this.router.navigate([''])
-  }
-
   isHomeRoute(): boolean {
     return this.router.url === '/';
   }

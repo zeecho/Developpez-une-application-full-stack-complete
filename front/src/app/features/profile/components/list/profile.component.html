@@ -1,0 +1,39 @@
+<div class="profile-info">
+  <h3>Profil utilisateur</h3>
+  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+    <mat-form-field>
+      <input matInput placeholder="Nom d'utilisateur" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
+  </form>
+</div>
+
+<div>
+  <a (click)="logout()" class="link" style='color:darkred;'>Se déconnecter</a>
+</div>
+
+<div>
+  <h3>Abonnements</h3>
+  <mat-card>
+    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+      <mat-card class="item" *ngFor="let topic of (topics$ | async); let index = index" fxFlex>
+        <mat-card-header>
+          <mat-card-title>{{ topic.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ topic.description }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="unsubscribe(topic.id)">
+            Se désabonner
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>

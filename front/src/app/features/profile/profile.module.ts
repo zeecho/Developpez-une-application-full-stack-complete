@@ -9,9 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ArticlesRoutingModule } from './topics-routing.module';
+import { ProfileRoutingModule } from './profile-routing.module';
 import localeFr from '@angular/common/locales/fr';
-import { TopicListComponent } from './components/list/list.component';
+import { ProfileComponent } from './components/list/profile.component';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -26,14 +26,14 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-    TopicListComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    ArticlesRoutingModule,
+    ProfileRoutingModule,
     ...materialModules
   ]
 })
-export class TopicModule { }
+export class ProfileModule { }

@@ -29,6 +29,16 @@ public class TopicService {
         return this.topicRepository.findAll();
     }
     
+    public List<Topic> findSubscribedTopicsByUserId(Long userId) throws Exception {
+    	User user = this.userRepository.findById(userId).orElse(null);
+
+        if (user == null) {
+            throw new NotFoundException();
+        }
+        
+        return user.getTopics();
+    }
+    
     public void subscribe(Long id, Long userId) throws Exception {
         Topic topic = this.topicRepository.findById(id).orElse(null);
         User user = this.userRepository.findById(userId).orElse(null);
@@ -43,6 +53,24 @@ public class TopicService {
         }
 
         user.getTopics().add(topic);
+
+        this.topicRepository.save(topic);
+    }
+    
+    public void unsubscribe(Long id, Long userId) throws Exception {
+        Topic topic = this.topicRepository.findById(id).orElse(null);
+        User user = this.userRepository.findById(userId).orElse(null);
+        
+        if (topic == null || user == null) {
+            throw new NotFoundException();
+        }
+
+        boolean alreadyParticipate = user.getTopics().stream().anyMatch(o -> o.getId().equals(id));
+        if(!alreadyParticipate) {
+            throw new Exception();
+        }
+
+        user.getTopics().remove(topic);
 
         this.topicRepository.save(topic);
     }
