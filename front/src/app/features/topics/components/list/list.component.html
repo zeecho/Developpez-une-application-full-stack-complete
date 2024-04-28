@@ -1,22 +1,20 @@
-<div>
-  <mat-card>
-    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-      <mat-card class="item" *ngFor="let topic of (topics$ | async); let index = index" fxFlex>
-        <mat-card-header>
-          <mat-card-title>{{ topic.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{ topic.description }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" [disabled]="isSubscribed[index]" (click)="subscribe(topic.id, index)">
-            <ng-container *ngIf="!isSubscribed[index]; else subscribedText">S'abonner</ng-container>
-            <ng-template #subscribedText>Abonné</ng-template>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </mat-card>
+<div class="topics-container">
+  <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="12px" fxLayoutAlign="center">
+    <mat-card class="item grey-bg" *ngFor="let topic of (topics$ | async); let index = index" fxFlex="45">
+      <mat-card-header>
+        <mat-card-title>{{ topic.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{ topic.description }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="center">
+        <button mat-raised-button color="primary" [disabled]="isSubscribed[index]" (click)="subscribe(topic.id, index)">
+          <ng-container *ngIf="!isSubscribed[index]; else subscribedText">S'abonner</ng-container>
+          <ng-template #subscribedText>Abonné</ng-template>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
