@@ -1,68 +1,74 @@
-<div>
-  <mat-card>
-    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-      <mat-card class="item" fxFlex>
-        <mat-card-header>
-
-          <mat-card-title>
-            <div fxLayout="row" fxLayoutAlign="start center">
-              <button mat-icon-button (click)="back()">
-                <mat-icon>arrow_back</mat-icon>
-              </button>
-              <h1>{{ post?.title }}</h1>
-            </div>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div>
-            <span>
-              {{ post?.createdAt | date: 'longDate':'':'fr' }}
-            </span>
-            <span>
-              Auteur : {{ author?.username }}
-            </span>
-            <span>
-              Thème : {{ topic?.title }}
-            </span>
+<div fxLayout="row">
+  <div>
+    <button mat-icon-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="post-details" fxFlex="100">
+    <!-- Post Header -->
+    <mat-card class="custom-card">
+      <mat-card-header>
+        <mat-card-title>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <h1><strong>{{ post?.title }}</strong></h1>
           </div>
-          <p>
-            {{ post?.content }}
-          </p>
-        </mat-card-content>
-      </mat-card>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="row" fxLayout.xs="column">
+              <div fxLayout="row">
+                <span class="date">{{ post?.createdAt | date: 'longDate':'':'fr' }}</span>
+                <span class="author">Auteur : {{ author?.username }}</span>
+              </div>
+              <div>            
+                <span class="topic">Thème : {{ topic?.title }}</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="content">{{ post?.content }}</p>
+      </mat-card-content>
+  
+      
+      <hr />
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <mat-card-header>
+        <mat-card-title>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>Commentaires</h3>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let comment of (comments$ | async)">
+          <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="start center" class="comment-block">
+              <p class="author">{{ comment.authorUsername }}</p>
+              <p class="comment-content grey-bg comment">{{ comment.content }}</p>
+            </div>
+          </mat-card-content>
+        </div>
+      </mat-card-content>
+
+  
+      <!-- Add Comment Form -->
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()" fxLayoutAlign="center center">
+        <mat-form-field appearance="outline" fxFlex="60">
+          <textarea matInput placeholder="Écrivez ici votre commentaire" formControlName="content" rows="5"></textarea>
+          <mat-error *ngIf="commentForm.get('content')?.hasError('required') && commentForm.get('content')?.touched">
+            Le contenu du commentaire est requis.
+          </mat-error>
+        </mat-form-field>
+        <button mat-icon-button color="primary" type="submit" [disabled]="commentForm.invalid">
+          <mat-icon class="send-button">send</mat-icon>
+        </button>
+        <p *ngIf="onError" class="error">Une erreur est survenue</p>
+      </form>
     </div>
   </mat-card>
-</div>
-
-
-<div>
-  <h1>Commentaires</h1>
-  <mat-card>
-    <div class="items mt2" fxLayout="column" fxLayout.lt-md="column">
-      <mat-card class="item" *ngFor="let comment of (comments$ | async)" fxFlex>
-        <mat-card-content>
-          <p>
-            {{ comment.authorUsername }}:
-          </p>
-          <p>
-            {{ comment.content }}
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </mat-card>
-</div>
-
-<div>
-  <h2>Ajouter un commentaire</h2>
-  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-    <mat-form-field appearance="outline">
-      <textarea matInput placeholder="Votre commentaire" formControlName="content"></textarea>
-      <mat-error *ngIf="commentForm.get('content')?.hasError('required') && commentForm.get('content')?.touched">
-        Le contenu du commentaire est requis.
-      </mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">Envoyer</button>
-    <p *ngIf="onError" class="error">Une erreur est survenue</p>
-  </form>
+  </div>  
 </div>
