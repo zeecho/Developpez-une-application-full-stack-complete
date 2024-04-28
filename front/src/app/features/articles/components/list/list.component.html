@@ -1,6 +1,30 @@
 <div>
   <div class="flex justify-center">
-    <button mat-raised-button color="primary" [routerLink]="['article-create']">Créer un article</button>
+    <button mat-raised-button color="primary" [routerLink]="['create']">Créer un article</button>
     <button mat-button (click)="orderBy()">Trier par</button>
   </div>  
+</div>
+
+<div>
+  <mat-card>
+    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+      <mat-card class="item" *ngFor="let post of (posts$ | async)" fxFlex>
+        <mat-card-header>
+          <mat-card-title class="link" [routerLink]="['detail', post.id]">{{ post.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <span>
+            {{ post.createdAt | date: 'longDate':'':'fr' }}
+          </span>
+          <span>
+            Auteur : 
+            {{ post.authorUsername }}
+          </span>
+          <p>
+            {{ post.content }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card>
 </div>

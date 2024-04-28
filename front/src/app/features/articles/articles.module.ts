@@ -15,6 +15,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ArticlesRoutingModule } from './articles-routing.module';
 import localeFr from '@angular/common/locales/fr';
 import { ArticleListComponent } from './components/list/list.component';
+import { ArticleCreateComponent } from './components/create/create.component';
+import { ArticleDetailComponent } from './components/detail/detail.component';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -29,7 +31,9 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-    ArticleListComponent
+    ArticleListComponent,
+    ArticleCreateComponent,
+    ArticleDetailComponent
   ],
   imports: [
     CommonModule,

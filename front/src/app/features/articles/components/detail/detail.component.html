@@ -1,0 +1,68 @@
+<div>
+  <mat-card>
+    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+      <mat-card class="item" fxFlex>
+        <mat-card-header>
+
+          <mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button mat-icon-button (click)="back()">
+                <mat-icon>arrow_back</mat-icon>
+              </button>
+              <h1>{{ post?.title }}</h1>
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <span>
+              {{ post?.createdAt | date: 'longDate':'':'fr' }}
+            </span>
+            <span>
+              Auteur : {{ author?.username }}
+            </span>
+            <span>
+              Thème : {{ topic?.title }}
+            </span>
+          </div>
+          <p>
+            {{ post?.content }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>
+
+
+<div>
+  <h1>Commentaires</h1>
+  <mat-card>
+    <div class="items mt2" fxLayout="column" fxLayout.lt-md="column">
+      <mat-card class="item" *ngFor="let comment of (comments$ | async)" fxFlex>
+        <mat-card-content>
+          <p>
+            {{ comment.authorUsername }}:
+          </p>
+          <p>
+            {{ comment.content }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>
+
+<div>
+  <h2>Ajouter un commentaire</h2>
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <mat-form-field appearance="outline">
+      <textarea matInput placeholder="Votre commentaire" formControlName="content"></textarea>
+      <mat-error *ngIf="commentForm.get('content')?.hasError('required') && commentForm.get('content')?.touched">
+        Le contenu du commentaire est requis.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">Envoyer</button>
+    <p *ngIf="onError" class="error">Une erreur est survenue</p>
+  </form>
+</div>

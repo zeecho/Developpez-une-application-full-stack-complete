@@ -14,3 +14,17 @@ h1 {
 .w100 {
     width: 100%;
 }
+
+.link {
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.link + .link {
+    margin-left: 10px;
+}
+
+.logo-toolbar {
+    max-height: 100%;
+}

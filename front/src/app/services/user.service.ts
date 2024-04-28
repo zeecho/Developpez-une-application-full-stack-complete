@@ -16,10 +16,6 @@ export class UserService {
     return this.httpClient.get<User>(`${this.pathService}/${id}`);
   }
 
-  // public delete(id: string): Observable<any> {
-  //   return this.httpClient.delete(`${this.pathService}/${id}`);
-  // }
-
   public updateProfile(userId: string, updatedProfile: Object): Observable<any> {
     return this.httpClient.put<void>(`${this.pathService}/${userId}`, updatedProfile).pipe(
     );

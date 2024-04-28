@@ -1,0 +1,40 @@
+<div class="create m3">
+  <mat-card>
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>Créer un nouvel article</h1>
+      </div>
+    </mat-card-title>
+    <mat-card-content>
+      <form class="mt2" fxLayout="column" [formGroup]="form" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Thème de l'article</mat-label>
+          <mat-select formControlName="topic">
+            <mat-option *ngFor="let topic of topics$ | async" [value]="topic.id">
+              {{ topic.title }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="" fxFlex>
+          <mat-label>Titre de l'article</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>Contenu de l'article</mat-label>
+          <textarea matInput rows="8" formControlName="content"></textarea>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            Créer
+          </button>
+        </div>
+        <div>
+          <p *ngIf="onError" class="error" fxLayoutAlign="center center">Une erreur est survenue</p>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
