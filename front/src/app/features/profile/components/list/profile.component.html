@@ -1,39 +1,58 @@
-<div class="profile-info">
-  <h3>Profil utilisateur</h3>
-  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-    <mat-form-field>
-      <input matInput placeholder="Nom d'utilisateur" formControlName="username">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Email" formControlName="email">
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
-  </form>
+<div class="profile-section">
+  <div class="profile-info" fxLayout="column" fxLayoutAlign="center center">
+    <mat-card class="custom-card">
+      <mat-card-header fxLayoutAlign="center">
+        <mat-card-title>
+          <h2>Profil utilisateur</h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" fxLayout="column">
+            <mat-form-field>
+              <input matInput placeholder="Nom d'utilisateur" formControlName="username">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
+          </form>
+        </div>
+        <div class="logout-section" fxLayoutAlign="center">
+          <a (click)="logout()" class="link logout-link">Se déconnecter</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
-<div>
-  <a (click)="logout()" class="link" style='color:darkred;'>Se déconnecter</a>
-</div>
+<hr>
 
-<div>
-  <h3>Abonnements</h3>
-  <mat-card>
-    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-      <mat-card class="item" *ngFor="let topic of (topics$ | async); let index = index" fxFlex>
-        <mat-card-header>
-          <mat-card-title>{{ topic.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{ topic.description }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="unsubscribe(topic.id)">
-            Se désabonner
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+<div class="subscriptions-section">
+  <mat-card class="custom-card">
+    <mat-card-header fxLayoutAlign="center">
+      <mat-card-title>
+        <h2>Abonnements</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="12px" fxLayoutAlign="center">
+        <mat-card class="item grey-bg" *ngFor="let topic of (topics$ | async); let index = index" fxFlex="45">
+          <mat-card-header>
+            <mat-card-title>{{ topic.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{ topic.description }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="unsubscribe(topic.id)">
+              Se désabonner
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card-content>
   </mat-card>
 </div>
