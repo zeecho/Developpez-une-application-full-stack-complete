@@ -1,7 +1,40 @@
 .center {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container button {
+  margin-bottom: 10px;
+}
+
+img {
+  max-width: 100%;
+}
+
+@media (min-width: 600px) {
+  .center {
+    height: 100vh;
+  }
+  .button-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .button-container button {
+    margin-bottom: 0;
+    margin-right: 40px;
+  }
+
+  .button-container button:last-child {
+    margin-right: 0;
+  }
 }
