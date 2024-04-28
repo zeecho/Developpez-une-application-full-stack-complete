@@ -1,30 +1,28 @@
-<div>
-  <div class="flex justify-center">
-    <button mat-raised-button color="primary" [routerLink]="['create']">Créer un article</button>
-    <button mat-button (click)="orderBy()">Trier par</button>
-  </div>  
-</div>
-
-<div>
-  <mat-card>
-    <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-      <mat-card class="item" *ngFor="let post of (posts$ | async)" fxFlex>
+<div class="page-container" fxLayout="column">
+  <div class="button-container" fxLayout.xs="column">
+    <button mat-raised-button color="primary" [routerLink]="['create']" class="create-button" fxFlexAlign="center">
+      Créer un article
+    </button>
+    <button mat-button (click)="orderBy()" class="sort-button" fxFlexAlign="center">
+      Trier par 
+      <mat-icon>south</mat-icon>
+    </button>
+  </div>
+  <div class="items" fxLayout="row wrap" fxLayoutGap="24px" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutAlign.xs="left">
+    <div *ngFor="let post of (posts$ | async)" fxFlex="45">
+      <mat-card class="item grey-bg">
         <mat-card-header>
-          <mat-card-title class="link" [routerLink]="['detail', post.id]">{{ post.title }}</mat-card-title>
+          <mat-card-title class="link" [routerLink]="['detail', post.id]"><strong>{{ post.title
+              }}</strong></mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <span>
-            {{ post.createdAt | date: 'longDate':'':'fr' }}
-          </span>
-          <span>
-            Auteur : 
-            {{ post.authorUsername }}
-          </span>
-          <p>
-            {{ post.content }}
-          </p>
+          <div class="info-container">
+            <span class="date">{{ post.createdAt | date: 'longDate':'':'fr' }}</span>
+            <span class="author">Auteur: {{ post.authorUsername }}</span>
+          </div>
+          <p class="content">{{ post.content }}</p>
         </mat-card-content>
       </mat-card>
     </div>
-  </mat-card>
+  </div>
 </div>

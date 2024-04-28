@@ -1,0 +1,56 @@
+.page-container {
+  margin: 24px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.create-button {
+  margin-right: auto;
+}
+
+.sort-button {
+  margin-left: auto;
+}
+
+.grey-bg {
+  background-color: #f0f0f0;
+}
+
+.item {
+  margin-bottom: 12px;
+}
+
+.info-container {
+  margin-bottom: 12px;
+}
+
+.date, .author {
+  margin-right: 24px;
+}
+
+.content {
+  margin-top: 12px;
+}
+
+mat-card-title {
+  line-height: 1.5;
+}
+
+mat-card-content {
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .create-button {
+    margin-right: unset;
+    margin-bottom: 10px;
+  }
+
+  .sort-button {
+    margin-left: unset;
+  }
+}
