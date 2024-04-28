@@ -15,7 +15,7 @@ public class CreateCommentRequest {
     private String content;
 
     @NotNull
-    private Long article;
+    private Long post;
 
     @NotNull
     private Long author;

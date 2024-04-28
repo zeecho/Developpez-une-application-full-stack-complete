@@ -2,7 +2,7 @@ package com.openclassrooms.mddapi.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
-public class CreateArticleRequest {
+public class CreatePostRequest {
 	@NotBlank
 	private String title;
 

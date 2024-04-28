@@ -22,9 +22,9 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{articleId}")
-    public ResponseEntity<List<CommentDto>> getCommentsByArticleId(@PathVariable("articleId") Long articleId) {
-        List<CommentDto> comments = commentService.getCommentsByArticleId(articleId);
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<CommentDto>> getCommentsByPostId(@PathVariable("postId") Long postId) {
+        List<CommentDto> comments = commentService.getCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
     }
 

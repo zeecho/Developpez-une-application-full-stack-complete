@@ -11,7 +11,7 @@ export class HomeRedirectGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.sessionService.isLogged) {
-      this.router.navigate(['/articles']);
+      this.router.navigate(['/posts']);
       return false;
     }
     return true;

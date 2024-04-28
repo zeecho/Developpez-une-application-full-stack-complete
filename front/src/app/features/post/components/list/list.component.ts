@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Article } from 'src/app/interfaces/article.interface';
-import { ArticleService } from 'src/app/services/article.service';
+import { Post } from 'src/app/interfaces/post.interface';
+import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
 
 @Component({
-  selector: 'app-article-list',
+  selector: 'app-post-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ArticleListComponent {
-  public posts$: Observable<Article[]> = this.articleService.allSubscribed(this.sessionService.sessionInformation!.id);
+export class PostListComponent {
+  public posts$: Observable<Post[]> = this.postService.allSubscribed(this.sessionService.sessionInformation!.id);
 
   constructor(
     private router: Router,
-    private articleService: ArticleService,
+    private postService: PostService,
     private sessionService: SessionService) {
   }
 

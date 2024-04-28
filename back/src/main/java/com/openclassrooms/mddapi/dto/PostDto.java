@@ -12,7 +12,7 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDto {
+public class PostDto {
     private Long id;
 
     @NonNull

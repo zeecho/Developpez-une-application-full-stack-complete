@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.openclassrooms.mddapi.models.Article;
+import com.openclassrooms.mddapi.models.Post;
 
 @Repository
-public interface ArticleRepository extends JpaRepository<Article, Long> {
-    List<Article> findByTopicId(Long topicId);
+public interface PostRepository extends JpaRepository<Post, Long> {
+    List<Post> findByTopicId(Long topicId);
 }

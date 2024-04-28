@@ -3,7 +3,7 @@ export interface Comment {
   content: string;
   author: number;
   authorUsername: string;
-  article: number;
+  post: number;
   createdAt: Date;
   updatedAt?: Date;
 }

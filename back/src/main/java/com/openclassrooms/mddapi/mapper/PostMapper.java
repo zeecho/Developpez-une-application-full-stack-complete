@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.mapper;
 
-import com.openclassrooms.mddapi.dto.ArticleDto;
-import com.openclassrooms.mddapi.models.Article;
+import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.TopicService;
 import com.openclassrooms.mddapi.services.UserService;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = "spring", uses = {UserService.class, TopicService.class})
-public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article> {
+public abstract class PostMapper implements EntityMapper<PostDto, Post> {
     @Autowired
     protected UserService userService;
     
@@ -21,19 +21,19 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
     protected TopicService topicService;
 
     @Mappings({
-            @Mapping(target = "author", source = "article.author.id"),
-            @Mapping(target = "authorUsername", expression = "java(getAuthorUsername(article.getAuthor()))"),
-            @Mapping(target = "topic", source = "article.topic.id")
+            @Mapping(target = "author", source = "post.author.id"),
+            @Mapping(target = "authorUsername", expression = "java(getAuthorUsername(post.getAuthor()))"),
+            @Mapping(target = "topic", source = "post.topic.id")
     })
-    public abstract ArticleDto toDto(Article article);
+    public abstract PostDto toDto(Post post);
 
     public String getAuthorUsername(User author) {
         return userService.getUsernameById(author.getId());
     }
 
     @Mappings({
-            @Mapping(target = "author", expression = "java(userService.findById(articleDto.getAuthor()))"),
-            @Mapping(target = "topic", expression = "java(topicService.findById(articleDto.getTopic()))")
+            @Mapping(target = "author", expression = "java(userService.findById(postDto.getAuthor()))"),
+            @Mapping(target = "topic", expression = "java(topicService.findById(postDto.getTopic()))")
     })
-    public abstract Article toEntity(ArticleDto articleDto);
+    public abstract Post toEntity(PostDto postDto);
 }

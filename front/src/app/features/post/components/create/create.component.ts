@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ArticleService } from 'src/app/services/article.service';
+import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TopicService } from 'src/app/services/topic.service';
 
 @Component({
-  selector: 'app-article-create',
+  selector: 'app-post-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class ArticleCreateComponent {
+export class PostCreateComponent {
   public form = this.fb.group({
     topic: [
       null,
@@ -39,7 +39,7 @@ export class ArticleCreateComponent {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private articleService: ArticleService,
+    private postService: PostService,
     private topicService: TopicService,
     private sessionService: SessionService) {
   }
@@ -52,9 +52,9 @@ export class ArticleCreateComponent {
     const createRequest = this.form.value;
     const userId = this.sessionService.sessionInformation!.id.toString();
 
-    this.articleService.create(userId, createRequest).subscribe({
+    this.postService.create(userId, createRequest).subscribe({
       next: () => {
-        this.router.navigate(['/articles']);
+        this.router.navigate(['/posts']);
       },
       error: error => this.onError = true,
     });

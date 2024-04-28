@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ArticlesRoutingModule } from './topics-routing.module';
+import { TopicRoutingModule } from './topics-routing.module';
 import localeFr from '@angular/common/locales/fr';
 import { TopicListComponent } from './components/list/list.component';
 registerLocaleData(localeFr);
@@ -32,7 +32,7 @@ const materialModules = [
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    ArticlesRoutingModule,
+    TopicRoutingModule,
     ...materialModules
   ]
 })

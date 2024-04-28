@@ -9,14 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-// import { ListComponent } from './components/list/list.component';
-// import { FormComponent } from './components/form/form.component';
-// import { DetailComponent } from './components/detail/detail.component';
-import { ArticlesRoutingModule } from './articles-routing.module';
+import { PostRoutingModule } from './post-routing.module';
 import localeFr from '@angular/common/locales/fr';
-import { ArticleListComponent } from './components/list/list.component';
-import { ArticleCreateComponent } from './components/create/create.component';
-import { ArticleDetailComponent } from './components/detail/detail.component';
+import { PostListComponent } from './components/list/list.component';
+import { PostCreateComponent } from './components/create/create.component';
+import { PostDetailComponent } from './components/detail/detail.component';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -31,16 +28,16 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-    ArticleListComponent,
-    ArticleCreateComponent,
-    ArticleDetailComponent
+    PostListComponent,
+    PostCreateComponent,
+    PostDetailComponent
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    ArticlesRoutingModule,
+    PostRoutingModule,
     ...materialModules
   ]
 })
-export class ArticleModule { }
+export class PostModule { }

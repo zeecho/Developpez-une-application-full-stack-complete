@@ -2,23 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Article } from 'src/app/interfaces/article.interface';
+import { Post } from 'src/app/interfaces/post.interface';
 import { Comment } from 'src/app/interfaces/comment.interface';
 import { Topic } from 'src/app/interfaces/topic.interface';
 import { User } from 'src/app/interfaces/user.interface';
-import { ArticleService } from 'src/app/services/article.service';
+import { PostService } from 'src/app/services/post.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-article-detail',
+  selector: 'app-post-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class ArticleDetailComponent implements OnInit {
-  public post: Article | undefined;
+export class PostDetailComponent implements OnInit {
+  public post: Post | undefined;
   public author: User | undefined;
   public topic: Topic | undefined;
   public comments$: Observable<Comment[]> = this.commentService.all(this.route.snapshot.paramMap.get('id')!);
@@ -31,7 +31,7 @@ export class ArticleDetailComponent implements OnInit {
       ]
     ],
     author: this.sessionService.sessionInformation!.id.toString(),
-    article: this.route.snapshot.paramMap.get('id')
+    post: this.route.snapshot.paramMap.get('id')
   });  
   
   public postId: string;
@@ -40,7 +40,7 @@ export class ArticleDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private articleService: ArticleService,
+    private postService: PostService,
     private topicService: TopicService,
     private userService: UserService,
     private commentService: CommentService,
@@ -80,9 +80,9 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   private fetchPost(): void {
-    this.articleService
+    this.postService
       .detail(this.postId)
-      .subscribe((post: Article) => {
+      .subscribe((post: Post) => {
         this.post = post;
         this.updatePageTitle();
         this.topicService
