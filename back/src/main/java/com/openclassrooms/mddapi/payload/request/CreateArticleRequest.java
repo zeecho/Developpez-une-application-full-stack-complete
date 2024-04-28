@@ -1,0 +1,37 @@
+package com.openclassrooms.mddapi.payload.request;
+
+import javax.validation.constraints.NotBlank;
+
+public class CreateArticleRequest {
+	@NotBlank
+	private String title;
+
+	@NotBlank
+	private String content;
+	
+	private Long topic;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Long getTopic() {
+		return topic;
+	}
+
+	public void setTopic(Long topic) {
+		this.topic = topic;
+	}
+}

@@ -19,6 +19,11 @@ public class UserService {
     public User findById(Long id) {
         return this.userRepository.findById(id).orElse(null);
     }
+
+    public String getUsernameById(Long id) {
+    	User user = this.userRepository.findById(id).orElse(null);
+        return user.getUsername();
+    }
     
     public User findByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
