@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 h1 {
     margin: 0 !important;
@@ -21,10 +28,18 @@ h1 {
     text-decoration: none;
 }
 
-.link + .link {
+.link+.link {
     margin-left: 10px;
 }
 
 .logo-toolbar {
     max-height: 100%;
+}
+
+.custom-card {
+    box-shadow: none;
+}
+
+.grey-bg {
+    background-color: #f0f0f0 !important;
 }
