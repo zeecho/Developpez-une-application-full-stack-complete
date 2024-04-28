@@ -43,6 +43,10 @@ export class RegisterComponent {
               private router: Router) {
   }
 
+  public back(): void {
+    window.history.back();
+  }
+  
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
     this.authService.register(registerRequest).subscribe({

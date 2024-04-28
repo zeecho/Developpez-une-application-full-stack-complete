@@ -1,3 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
 <div class="login" fxLayout="row" fxLayoutAlign="center center">
     <mat-card>
         <mat-card-header fxLayoutAlign="center center">
@@ -6,7 +11,7 @@
         <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
             <mat-card-content fxLayout="column">
                 <mat-form-field fxFlex>
-                    <input matInput placeholder="Email" formControlName="email">
+                    <input matInput placeholder="Nom d'utilisateur" formControlName="email">
                 </mat-form-field>
                 <mat-form-field fxFlex>
                     <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe"
@@ -16,9 +21,9 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" fxFlexAlign="center">Se connecter</button>
+                <span *ngIf="onError" class="error ml2" fxFlexAlign="center">Une erreur est survenue</span>
             </mat-card-content>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
-            <p *ngIf="onError" class="error">Une erreur est survenue</p>
         </form>
     </mat-card>
 </div>

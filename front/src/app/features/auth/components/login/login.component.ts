@@ -38,6 +38,10 @@ export class LoginComponent {
               private sessionService: SessionService) {
   }
 
+  public back(): void {
+    window.history.back();
+  }
+  
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
