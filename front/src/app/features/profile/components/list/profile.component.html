@@ -36,7 +36,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="12px" fxLayoutAlign="center">
+      <div class="items mt2" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
         <mat-card class="item grey-bg" *ngFor="let topic of (topics$ | async); let index = index" fxFlex="45">
           <mat-card-header>
             <mat-card-title>{{ topic.title }}</mat-card-title>
