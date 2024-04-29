@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Post } from 'src/app/interfaces/post.interface';
 import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -11,16 +10,37 @@ import { SessionService } from 'src/app/services/session.service';
   styleUrls: ['./list.component.scss']
 })
 export class PostListComponent {
+  public showOrderMenu = false;
   public posts$: Observable<Post[]> = this.postService.allSubscribed(this.sessionService.sessionInformation!.id);
 
   constructor(
-    private router: Router,
     private postService: PostService,
     private sessionService: SessionService) {
   }
 
-  // TODO
-  public orderBy(): void {
+  public toggleOrderMenu() {
+    this.showOrderMenu = !this.showOrderMenu;
+  }
 
+  public orderBy(attribute: keyof Post, ascending: boolean): void {
+    this.showOrderMenu = false;
+    this.posts$ = this.posts$.pipe(
+      map(posts => posts.sort((a, b) => {
+        const valueA = a[attribute];
+        const valueB = b[attribute];
+
+        if (valueA !== undefined && valueB !== undefined) {
+          if (attribute === 'createdAt') {
+            const dateA = new Date(valueA).getTime();
+            const dateB = new Date(valueB).getTime();
+            return ascending ? dateA - dateB : dateB - dateA;
+          } else {
+            if (valueA < valueB) return -1;
+            if (valueA > valueB) return 1;
+          }
+        }
+        return 0;
+      }))
+    );
   }
 }

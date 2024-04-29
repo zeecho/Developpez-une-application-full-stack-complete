@@ -3,24 +3,40 @@
     <button mat-raised-button color="primary" [routerLink]="['create']" class="create-button" fxFlexAlign="center">
       Créer un article
     </button>
-    <button mat-button (click)="orderBy()" class="sort-button" fxFlexAlign="center">
-      Trier par 
-      <mat-icon>south</mat-icon>
-    </button>
+    <div fxLayout="column">
+      <button mat-button (click)="toggleOrderMenu()" class="sort-button" fxFlexAlign="center">
+        Trier par
+        <mat-icon>south</mat-icon>
+      </button>
+      <div *ngIf="showOrderMenu" fxLayout="column">
+        <button mat-button (click)="orderBy('title', true)" class="sort-button">
+          Titre
+        </button>
+        <button mat-button (click)="orderBy('authorUsername', true)" class="sort-button">
+          Auteur
+        </button>
+        <button mat-button (click)="orderBy('createdAt', true)" class="sort-button">
+          Date de création (Plus ancien en premier)
+        </button>
+        <button mat-button (click)="orderBy('createdAt', false)" class="sort-button">
+          Date de création (Plus récent en premier)
+        </button>
+      </div>
+    </div>
   </div>
   <div class="items" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
-      <mat-card class="item grey-bg" *ngFor="let post of (posts$ | async)" fxFlex="45">
-        <mat-card-header>
-          <mat-card-title class="link" [routerLink]="['detail', post.id]"><strong>{{ post.title
-              }}</strong></mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="info-container">
-            <span class="date">{{ post.createdAt | date: 'longDate':'':'fr' }}</span>
-            <span class="author">Auteur: {{ post.authorUsername }}</span>
-          </div>
-          <p class="content">{{ post.content }}</p>
-        </mat-card-content>
-      </mat-card>
+    <mat-card class="item grey-bg" *ngFor="let post of (posts$ | async)" fxFlex="45">
+      <mat-card-header>
+        <mat-card-title class="link" [routerLink]="['detail', post.id]"><strong>{{ post.title
+            }}</strong></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="info-container">
+          <span class="date">{{ post.createdAt | date: 'longDate':'':'fr' }}</span>
+          <span class="author">Auteur: {{ post.authorUsername }}</span>
+        </div>
+        <p class="content">{{ post.content }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
