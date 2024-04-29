@@ -2,18 +2,18 @@
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" *ngIf="!isHomeRoute()">
     <img src="/assets/logo_p6.png" alt="logo" routerLink="/" class="link logo-toolbar" />
     <nav *ngIf="$isLogged() | async;" fxLayout="row" fxHide.xs>
-      <span routerLink="posts" class="link">Articles</span>
-      <span routerLink="topics" class="link">Thèmes</span>
-      <span routerLink="profile" class="link"><mat-icon>account_circle</mat-icon></span>
+      <a routerLink="posts" class="link" routerLinkActive="active-link">Articles</a>
+      <a routerLink="topics" class="link" routerLinkActive="active-link">Thèmes</a>
+      <a routerLink="profile" class="link" routerLinkActive="active-link"><mat-icon>account_circle</mat-icon></a>
     </nav>
     <div fxLayout="column" fxHide fxShow.xs>
       <button class="burger-menu link" (click)="toggleMenu()">
         <mat-icon>menu</mat-icon>
       </button>
       <div *ngIf="isMenuOpen" fxLayout="column" class="mobile-menu">
-        <span routerLink="posts" class="link">Articles</span>
-        <span routerLink="topics" class="link">Thèmes</span>
-        <span routerLink="profile" class="link"><mat-icon>account_circle</mat-icon></span>
+        <span routerLink="posts" class="link" routerLinkActive="active-link">Articles</span>
+        <span routerLink="topics" class="link" routerLinkActive="active-link">Thèmes</span>
+        <span routerLink="profile" class="link" routerLinkActive="active-link"><mat-icon>account_circle</mat-icon></span>
       </div>
     </div>
   </mat-toolbar>

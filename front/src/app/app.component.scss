@@ -29,6 +29,18 @@
   position: relative;
 }
 
+a {
+  color: black;
+}
+
+a:hover {
+  color: #673ab7;
+}
+
+.active-link {
+  color: #673ab7;
+}
+
 // this doesn't work
 // .blur {
 //   position: fixed;
