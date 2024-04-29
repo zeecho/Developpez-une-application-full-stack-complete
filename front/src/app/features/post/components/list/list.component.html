@@ -9,8 +9,7 @@
     </button>
   </div>
   <div class="items" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
-    <div *ngFor="let post of (posts$ | async)" fxFlex="45">
-      <mat-card class="item grey-bg">
+      <mat-card class="item grey-bg" *ngFor="let post of (posts$ | async)" fxFlex="45">
         <mat-card-header>
           <mat-card-title class="link" [routerLink]="['detail', post.id]"><strong>{{ post.title
               }}</strong></mat-card-title>
@@ -23,6 +22,5 @@
           <p class="content">{{ post.content }}</p>
         </mat-card-content>
       </mat-card>
-    </div>
   </div>
 </div>
