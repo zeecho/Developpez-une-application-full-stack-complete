@@ -12,6 +12,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProfileRoutingModule } from './profile-routing.module';
 import localeFr from '@angular/common/locales/fr';
 import { ProfileComponent } from './components/list/profile.component';
+import { ProfileChangePasswordComponent } from './components/change-password/change-password.component';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -27,6 +28,7 @@ const materialModules = [
 @NgModule({
   declarations: [
     ProfileComponent,
+    ProfileChangePasswordComponent
   ],
   imports: [
     CommonModule,

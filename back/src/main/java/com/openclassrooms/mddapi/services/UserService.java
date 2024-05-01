@@ -2,6 +2,9 @@ package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,4 +35,9 @@ public class UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
+    
+    public User getLoggedInUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return findByUsername(auth.getName());
+	}
 }

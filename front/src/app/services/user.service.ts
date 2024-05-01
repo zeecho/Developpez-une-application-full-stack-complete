@@ -16,8 +16,13 @@ export class UserService {
     return this.httpClient.get<User>(`${this.pathService}/${id}`);
   }
 
-  public updateProfile(userId: string, updatedProfile: Object): Observable<any> {
-    return this.httpClient.put<void>(`${this.pathService}/${userId}`, updatedProfile).pipe(
+  public updateProfile(updatedProfile: Object): Observable<any> {
+    return this.httpClient.put<void>(`${this.pathService}`, updatedProfile).pipe(
+    );
+  }
+
+  public updatePassword(updatePassword: Object): Observable<any> {
+    return this.httpClient.put<void>(`${this.pathService}/change-password`, updatePassword).pipe(
     );
   }
 }

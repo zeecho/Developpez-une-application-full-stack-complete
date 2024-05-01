@@ -17,7 +17,12 @@
                     <input matInput placeholder="Adresse e-mail" formControlName="email">
                 </mat-form-field>
                 <mat-form-field fxFlex>
-                    <input matInput placeholder="Mot de passe" formControlName="password">
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe"
+                        formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'"
+                        [attr.aria-pressed]="hide" type="button">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" fxFlexAlign="center">S'inscrire</button>

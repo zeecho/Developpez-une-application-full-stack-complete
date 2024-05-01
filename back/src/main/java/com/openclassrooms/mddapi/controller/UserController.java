@@ -1,68 +1,81 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mapper.UserMapper;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.request.ChangePasswordRequest;
+import com.openclassrooms.mddapi.payload.request.UpdateProfileRequest;
 import com.openclassrooms.mddapi.services.UserService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserMapper userMapper;
-    private final UserService userService;
+	private final UserMapper userMapper;
+	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
 
+	public UserController(UserService userService, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+		this.userMapper = userMapper;
+		this.userService = userService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
-    public UserController(UserService userService,
-                             UserMapper userMapper) {
-        this.userMapper = userMapper;
-        this.userService = userService;
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findById(@PathVariable("id") String id) {
+		try {
+			User user = this.userService.findById(Long.valueOf(id));
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
-        try {
-            User user = this.userService.findById(Long.valueOf(id));
+			if (user == null) {
+				return ResponseEntity.notFound().build();
+			}
 
-            if (user == null) {
-                return ResponseEntity.notFound().build();
-            }
+			return ResponseEntity.ok().body(this.userMapper.toDto(user));
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
 
-            return ResponseEntity.ok().body(this.userMapper.toDto(user));
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    
-    @PutMapping("/{userId}")
-    public ResponseEntity<?> updateProfile(@PathVariable("userId") Long userId, @RequestBody UserDto updatedProfile) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User loggedInUser = userService.findByUsername(auth.getName());
-        
-        if (!Objects.equals(userId, loggedInUser.getId())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        
-        try {
-            User userToUpdate = userService.findById(userId);
-            userToUpdate.setUsername(updatedProfile.getUsername());
-            userToUpdate.setEmail(updatedProfile.getEmail());
-            
-            User user = userService.save(userToUpdate);
-            return ResponseEntity.ok().body(this.userMapper.toDto(user));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Erreur lors de la mise à jour du profil utilisateur");
-        }
-    }
-    
+	@PutMapping()
+	public ResponseEntity<?> updateProfile(@RequestBody UpdateProfileRequest updatedProfile) {
+		try {
+			User loggedInUser = userService.getLoggedInUser();
+
+			loggedInUser.setUsername(updatedProfile.getUsername());
+			loggedInUser.setEmail(updatedProfile.getEmail());
+
+			User user = userService.save(loggedInUser);
+			return ResponseEntity.ok().body(this.userMapper.toDto(user));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Erreur lors de la mise à jour du profil utilisateur");
+		}
+	}
+
+	@PutMapping("/change-password")
+	public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordRequest updatedPassword) {
+		User loggedInUser = userService.getLoggedInUser();
+
+		if (!passwordEncoder.matches(updatedPassword.getOldPassword(), loggedInUser.getPassword())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ancien mot de passe incorrect");
+		}
+
+		try {
+			loggedInUser.setPassword(passwordEncoder.encode(updatedPassword.getNewPassword()));
+
+			User user = userService.save(loggedInUser);
+			return ResponseEntity.ok().body(this.userMapper.toDto(user));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Erreur lors de la mise à jour du profil utilisateur");
+		}
+	}
+
 //    @DeleteMapping("{id}")
 //    public ResponseEntity<?> save(@PathVariable("id") String id) {
 //        try {

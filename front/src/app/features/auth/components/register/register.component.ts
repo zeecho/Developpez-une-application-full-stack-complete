@@ -10,6 +10,7 @@ import { RegisterRequest } from '../../interfaces/registerRequest.interface';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  public hide = true;
   public onError = false;
 
   public form = this.fb.group({

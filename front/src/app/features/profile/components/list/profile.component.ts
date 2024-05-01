@@ -25,6 +25,7 @@ export class ProfileComponent {
   });
 
   public onError = false;
+  public errorMessage = "Une erreur est survenue";
   public onSuccess = false;
 
   constructor(
@@ -49,12 +50,13 @@ export class ProfileComponent {
         this.onSuccess = false;
         this.onError = false;
         const updatedProfile = this.profileForm.value;
-        this.userService.updateProfile(this.userId, updatedProfile).subscribe({
+        this.userService.updateProfile(updatedProfile).subscribe({
           next: () => {
             this.onSuccess = true;
           },
-          error: () => {
+          error: (error) => {
             this.onError = true;
+            this.errorMessage = error.error;
           }
         });
   }

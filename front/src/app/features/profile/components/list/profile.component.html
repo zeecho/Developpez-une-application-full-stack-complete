@@ -20,12 +20,15 @@
               <p *ngIf="onSuccess" class="success" fxLayoutAlign="center center">Changement sauvegardé avec succès</p>
             </div>
             <div>
-              <p *ngIf="onError" class="error" fxLayoutAlign="center center">Une erreur est survenue</p>
+              <p *ngIf="onError" class="error" fxLayoutAlign="center center">{{ errorMessage }}</p>
             </div>
           </form>
         </div>
         <div class="logout-section" fxLayoutAlign="center">
           <a (click)="logout()" class="link logout-link">Se déconnecter</a>
+        </div>
+        <div class="change-pass-button">
+          <button mat-button routerLink="change-password">Changer mon mot de passe</button>
         </div>
       </mat-card-content>
     </mat-card>
