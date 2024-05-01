@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Post } from 'src/app/interfaces/post.interface';
 import { PostService } from 'src/app/services/post.service';
@@ -9,11 +9,21 @@ import { SessionService } from 'src/app/services/session.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class PostListComponent {
+export class PostListComponent implements OnInit {
   public showOrderMenu = false;
   public posts$: Observable<Post[]> = this.postService.allSubscribed();
 
   constructor(private postService: PostService) {
+  }
+
+  ngOnInit(): void {
+    this.posts$ = this.postService.allSubscribed().pipe(
+      map(posts => posts.sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return dateB - dateA;
+      }))
+    );
   }
 
   public toggleOrderMenu() {
