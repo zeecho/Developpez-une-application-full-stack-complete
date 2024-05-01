@@ -24,6 +24,9 @@ export class ProfileComponent {
     email: ['', [Validators.required, Validators.email]]
   });
 
+  public onError = false;
+  public onSuccess = false;
+
   constructor(
     private sessionService: SessionService,
     private userService: UserService,
@@ -43,12 +46,15 @@ export class ProfileComponent {
   }
 
   public updateProfile(): void {
+        this.onSuccess = false;
+        this.onError = false;
         const updatedProfile = this.profileForm.value;
         this.userService.updateProfile(this.userId, updatedProfile).subscribe({
           next: () => {
-            // this.logout();
+            this.onSuccess = true;
           },
           error: () => {
+            this.onError = true;
           }
         });
   }

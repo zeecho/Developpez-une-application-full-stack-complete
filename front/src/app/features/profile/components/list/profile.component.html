@@ -16,6 +16,12 @@
               <input matInput placeholder="Email" formControlName="email">
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
+            <div>
+              <p *ngIf="onSuccess" class="success" fxLayoutAlign="center center">Changement sauvegardé avec succès</p>
+            </div>
+            <div>
+              <p *ngIf="onError" class="error" fxLayoutAlign="center center">Une erreur est survenue</p>
+            </div>
           </form>
         </div>
         <div class="logout-section" fxLayoutAlign="center">
