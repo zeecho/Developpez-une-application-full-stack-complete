@@ -46,7 +46,7 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmailOrUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -73,7 +73,6 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-        // Create new user's account
         User user = new User(signUpRequest.getEmail(),
         		signUpRequest.getUsername(),
         		passwordEncoder.encode(signUpRequest.getPassword()),

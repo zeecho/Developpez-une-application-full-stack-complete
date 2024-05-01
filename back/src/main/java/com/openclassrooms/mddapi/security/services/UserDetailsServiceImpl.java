@@ -16,26 +16,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   UserDetailsServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
-
+  
   @Override
   @Transactional
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//    User user = userRepository.findByEmail(username)
-//        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + username));
-    User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-    
-//    User user = userRepository.findByUsername(usernameOrEmail)
-//	    .orElse(userRepository.findByEmail(usernameOrEmail)
-//			    .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email or username: " + usernameOrEmail)));
+  public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+    User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username or email: " + usernameOrEmail));
 
     return UserDetailsImpl
-            .builder()
-            .id(user.getId())
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .password(user.getPassword())
-            .build();
+        .builder()
+        .id(user.getId())
+        .username(user.getUsername())
+        .email(user.getEmail())
+        .password(user.getPassword())
+        .build();
   }
-
 }

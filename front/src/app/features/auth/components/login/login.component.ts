@@ -16,11 +16,10 @@ export class LoginComponent {
   public onError = false;
 
   public form = this.fb.group({
-    email: [
+    emailOrUsername: [
       '',
       [
-        Validators.required,
-        Validators.email
+        Validators.required
       ]
     ],
     password: [

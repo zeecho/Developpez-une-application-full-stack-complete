@@ -11,7 +11,7 @@
         <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
             <mat-card-content fxLayout="column">
                 <mat-form-field fxFlex>
-                    <input matInput placeholder="Nom d'utilisateur" formControlName="email">
+                    <input matInput placeholder="Nom d'utilisateur ou email" formControlName="emailOrUsername">
                 </mat-form-field>
                 <mat-form-field fxFlex>
                     <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe"
