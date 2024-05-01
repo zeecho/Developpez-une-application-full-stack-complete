@@ -3,7 +3,9 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.models.Topic;
+import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.TopicService;
+import com.openclassrooms.mddapi.services.UserService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,12 @@ import java.util.List;
 public class TopicController {
     private final TopicMapper topicMapper;
     private final TopicService topicService;
+	private final UserService userService;
 
-    public TopicController(TopicService topicService, TopicMapper topicMapper) {
+    public TopicController(TopicService topicService, TopicMapper topicMapper, UserService userService) {
         this.topicService = topicService;
         this.topicMapper = topicMapper;
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
@@ -46,20 +50,22 @@ public class TopicController {
         return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     }
 
-    @GetMapping("/subscribed/{userId}")
-    public ResponseEntity<List<TopicDto>> findSubscribedTopicsByUserId(@PathVariable("userId") String userId) throws Exception {
+    @GetMapping("/subscribed")
+    public ResponseEntity<List<TopicDto>> findSubscribedTopicsByUserId() throws Exception {
     	try {
-    		List<Topic> topics = this.topicService.findSubscribedTopicsByUserId(Long.parseLong(userId));
+			User loggedInUser = userService.getLoggedInUser();
+    		List<Topic> topics = this.topicService.findSubscribedTopicsByUserId(loggedInUser.getId());
     		return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     	} catch (Exception e) {
             return ResponseEntity.badRequest().build();
 		}
     }
     
-    @PostMapping("{id}/subscribe/{userId}")
-    public ResponseEntity<?> subscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) throws Exception {
-        try {
-    		this.topicService.subscribe(Long.parseLong(id), Long.parseLong(userId));
+    @PostMapping("{id}/subscribe")
+    public ResponseEntity<?> subscribe(@PathVariable("id") String id) throws Exception {
+        try {			
+        	User loggedInUser = userService.getLoggedInUser();
+    		this.topicService.subscribe(Long.parseLong(id), loggedInUser.getId());
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -67,10 +73,11 @@ public class TopicController {
         }
     }
 
-    @PostMapping("{id}/unsubscribe/{userId}")
-    public ResponseEntity<?> unsubscribe(@PathVariable("id") String id, @PathVariable("userId") String userId) throws Exception {
+    @PostMapping("{id}/unsubscribe")
+    public ResponseEntity<?> unsubscribe(@PathVariable("id") String id) throws Exception {
         try {
-    		this.topicService.unsubscribe(Long.parseLong(id), Long.parseLong(userId));
+        	User loggedInUser = userService.getLoggedInUser();
+    		this.topicService.unsubscribe(Long.parseLong(id), loggedInUser.getId());
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {

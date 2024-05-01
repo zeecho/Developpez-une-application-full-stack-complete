@@ -6,13 +6,10 @@ import com.openclassrooms.mddapi.payload.request.ChangePasswordRequest;
 import com.openclassrooms.mddapi.payload.request.UpdateProfileRequest;
 import com.openclassrooms.mddapi.services.UserService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -28,16 +25,35 @@ public class UserController {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	@GetMapping()
+	public ResponseEntity<?> getCurrentUser() {
+		try {
+			User loggedInUser = userService.getLoggedInUser();
+
+			return ResponseEntity.ok().body(this.userMapper.toDto(loggedInUser));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	// this could be used by admins in the future if needed
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) {
 		try {
-			User user = this.userService.findById(Long.valueOf(id));
+			User loggedInUser = userService.getLoggedInUser();
 
-			if (user == null) {
-				return ResponseEntity.notFound().build();
+			if (loggedInUser.isAdmin()) {
+				User user = this.userService.findById(Long.valueOf(id));
+
+				if (user == null) {
+					return ResponseEntity.notFound().build();
+				}
+
+				return ResponseEntity.ok().body(this.userMapper.toDto(user));
+			} else {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Vous n'avez pas les droits nécessaires.");
 			}
 
-			return ResponseEntity.ok().body(this.userMapper.toDto(user));
 		} catch (NumberFormatException e) {
 			return ResponseEntity.badRequest().build();
 		}

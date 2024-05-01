@@ -11,11 +11,9 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class PostListComponent {
   public showOrderMenu = false;
-  public posts$: Observable<Post[]> = this.postService.allSubscribed(this.sessionService.sessionInformation!.id);
+  public posts$: Observable<Post[]> = this.postService.allSubscribed();
 
-  constructor(
-    private postService: PostService,
-    private sessionService: SessionService) {
+  constructor(private postService: PostService) {
   }
 
   public toggleOrderMenu() {

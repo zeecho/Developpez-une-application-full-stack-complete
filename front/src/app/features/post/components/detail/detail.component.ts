@@ -37,6 +37,7 @@ export class PostDetailComponent implements OnInit {
   public postId: string;
 
   public onError = false;
+  public errorMessage = "Une erreur est survenue";
 
   constructor(
     private route: ActivatedRoute,
@@ -75,7 +76,10 @@ export class PostDetailComponent implements OnInit {
         this.commentForm.get('content')?.updateValueAndValidity();
         this.comments$ = this.commentService.all(this.postId);
       },
-      error: error => this.onError = true,
+      error: (error) => {
+        this.onError = true;
+        this.errorMessage = error.error;
+      }
     });
   }
 
@@ -91,7 +95,7 @@ export class PostDetailComponent implements OnInit {
             this.topic = topic;
           });
         this.userService
-          .getById(post.author.toString())
+          .getCurrentUser()
           .subscribe((author: User) => {
             this.author = author;
           });

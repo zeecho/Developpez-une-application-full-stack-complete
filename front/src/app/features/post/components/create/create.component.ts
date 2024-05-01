@@ -51,7 +51,7 @@ export class PostCreateComponent {
     const createRequest = this.form.value;
     const userId = this.sessionService.sessionInformation!.id.toString();
 
-    this.postService.create(userId, createRequest).subscribe({
+    this.postService.create(createRequest).subscribe({
       next: () => {
         this.router.navigate(['/posts']);
       },

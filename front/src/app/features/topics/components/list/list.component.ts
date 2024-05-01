@@ -29,13 +29,13 @@ export class TopicListComponent {
 
   public subscribe(topicId: number, index: number): void {
     if (!this.isSubscribed[index]) {
-      this.topicService.subscribe(topicId.toString(), this.userId).subscribe(_ => this.fetchUserTopics());
+      this.topicService.subscribe(topicId.toString()).subscribe(_ => this.fetchUserTopics());
     }
   }
 
   private fetchUserTopics(): void {
     this.userService
-      .getById(this.userId)
+      .getCurrentUser()
       .subscribe((user: User) => {
         this.topics$.subscribe((topics: Topic[]) => {
           this.isSubscribed = topics.map(topic => user.topics.includes(topic.id));

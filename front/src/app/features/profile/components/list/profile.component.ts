@@ -35,9 +35,9 @@ export class ProfileComponent {
     private router: Router
   ) {
     this.userId = this.sessionService.sessionInformation!.id.toString();
-    this.topics$ = this.topicService.allSubscribed(this.userId);
+    this.topics$ = this.topicService.allSubscribed();
 
-    this.userService.getById(this.userId).subscribe((user: User) => {
+    this.userService.getCurrentUser().subscribe((user: User) => {
       this.profileForm.patchValue({
         username: user.username,
         email: user.email
@@ -66,15 +66,15 @@ export class ProfileComponent {
   }
 
   private fetchUserTopics(): void {
-    this.userService.getById(this.userId).subscribe((user: User) => {
-      this.topicService.allSubscribed(this.userId).subscribe((topics: Topic[]) => {
+    this.userService.getCurrentUser().subscribe((user: User) => {
+      this.topicService.allSubscribed().subscribe((topics: Topic[]) => {
         this.topics$ = of(topics);
       });
     });
   }
 
   public unsubscribe(topicId: number): void {
-      this.topicService.unsubscribe(topicId.toString(), this.userId).subscribe(_ => {
+      this.topicService.unsubscribe(topicId.toString()).subscribe(_ => {
         this.fetchUserTopics();
       });
   }

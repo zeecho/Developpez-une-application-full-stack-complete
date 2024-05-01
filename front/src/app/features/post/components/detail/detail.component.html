@@ -56,6 +56,7 @@
 
   
       <!-- Add Comment Form -->
+      <p *ngIf="onError" class="error" fxLayoutAlign="center center">{{ errorMessage }}</p>
       <form [formGroup]="commentForm" (ngSubmit)="submitComment()" fxLayoutAlign="center center">
         <mat-form-field appearance="outline" fxFlex="60">
           <textarea matInput placeholder="Écrivez ici votre commentaire" formControlName="content" rows="5"></textarea>
@@ -66,7 +67,6 @@
         <button mat-icon-button color="primary" type="submit" [disabled]="commentForm.invalid">
           <mat-icon class="send-button">send</mat-icon>
         </button>
-        <p *ngIf="onError" class="error">Une erreur est survenue</p>
       </form>
     </div>
   </mat-card>

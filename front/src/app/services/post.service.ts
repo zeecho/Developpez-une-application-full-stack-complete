@@ -16,15 +16,15 @@ export class PostService {
     return this.httpClient.get<Post[]>(this.pathService);
   }
 
-  public allSubscribed(userId: number): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(`${this.pathService}/subscribed/${userId}`);
+  public allSubscribed(): Observable<Post[]> {
+    return this.httpClient.get<Post[]>(`${this.pathService}/subscribed`);
   }
 
   public detail(id: string): Observable<Post> {
     return this.httpClient.get<Post>(`${this.pathService}/${id}`);
   }
 
-  public create(userId: string, formData: Object): Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/create/${userId}`, formData);
+  public create(formData: Object): Observable<void> {
+    return this.httpClient.post<void>(`${this.pathService}/create`, formData);
   }
 }
