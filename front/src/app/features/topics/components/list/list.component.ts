@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Topic } from 'src/app/interfaces/topic.interface';
 import { User } from 'src/app/interfaces/user.interface';
@@ -20,7 +19,6 @@ export class TopicListComponent {
   public userId: string;
 
   constructor(
-    private route: ActivatedRoute,
     private sessionService: SessionService,
     private topicService: TopicService,
     private userService: UserService
