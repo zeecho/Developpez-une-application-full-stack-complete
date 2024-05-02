@@ -17,6 +17,9 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
+/**
+ * This class represents a Comment entity.
+ */
 @Entity
 @Table(name = "Comment")
 @Data

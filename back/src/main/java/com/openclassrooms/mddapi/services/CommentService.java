@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class provides services related to comments.
+ */
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
@@ -29,10 +32,20 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Retrieves comments by post ID.
+     * @param postId The ID of the post.
+     * @return A list of comment DTOs.
+     */
     public List<CommentDto> getCommentsByPostId(Long postId) {
         return commentMapper.toDto(commentRepository.findByPostId(postId));
     }
     
+    /**
+     * Adds a comment.
+     * @param commentRequest The request payload for creating a comment.
+     * @throws NotFoundException if the post or user is not found.
+     */
     public void addComment(CreateCommentRequest commentRequest) throws Exception {
         Post post = postRepository.findById(commentRequest.getPost()).orElse(null);
         User user = userRepository.findById(commentRequest.getAuthor()).orElse(null);

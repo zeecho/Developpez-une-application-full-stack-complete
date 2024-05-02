@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This class is a Spring Boot controller responsible for managing topics.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/topics")
@@ -20,12 +23,23 @@ public class TopicController {
     private final TopicService topicService;
 	private final UserService userService;
 
+    /**
+     * Constructor for TopicController.
+     * @param topicService The service for managing topics.
+     * @param topicMapper The mapper for converting between Topic and TopicDto objects.
+     * @param userService The service for managing users.
+     */
     public TopicController(TopicService topicService, TopicMapper topicMapper, UserService userService) {
         this.topicService = topicService;
         this.topicMapper = topicMapper;
         this.userService = userService;
     }
 
+    /**
+     * GET method to retrieve a topic by its ID.
+     * @param id The ID of the topic to retrieve.
+     * @return ResponseEntity containing a TopicDto object.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         try {
@@ -42,6 +56,10 @@ public class TopicController {
         }
     }
 
+    /**
+     * GET method to retrieve all topics.
+     * @return ResponseEntity containing a list of TopicDto objects.
+     */
     @GetMapping
     public ResponseEntity<List<TopicDto>> findAll() {
 
@@ -50,6 +68,10 @@ public class TopicController {
         return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
     }
 
+    /**
+     * GET method to retrieve subscribed topics by user ID.
+     * @return ResponseEntity containing a list of TopicDto objects.
+     */
     @GetMapping("/subscribed")
     public ResponseEntity<List<TopicDto>> findSubscribedTopicsByUserId() throws Exception {
     	try {
@@ -61,6 +83,11 @@ public class TopicController {
 		}
     }
     
+    /**
+     * POST method to subscribe to a topic.
+     * @param id The ID of the topic to subscribe to.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @PostMapping("{id}/subscribe")
     public ResponseEntity<?> subscribe(@PathVariable("id") String id) throws Exception {
         try {			
@@ -73,6 +100,11 @@ public class TopicController {
         }
     }
 
+    /**
+     * POST method to unsubscribe from a topic.
+     * @param id The ID of the topic to unsubscribe from.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @PostMapping("{id}/unsubscribe")
     public ResponseEntity<?> unsubscribe(@PathVariable("id") String id) throws Exception {
         try {
@@ -84,20 +116,4 @@ public class TopicController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-//        try {
-//            Topic topic = this.topicService.findById(id);
-//
-//            if (topic == null) {
-//                return ResponseEntity.notFound().build();
-//            }
-//
-//            this.topicService.delete(id);
-//            return ResponseEntity.ok().build();
-//        } catch (NumberFormatException e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
 }

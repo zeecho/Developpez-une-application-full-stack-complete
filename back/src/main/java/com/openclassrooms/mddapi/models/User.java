@@ -12,6 +12,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * This class represents a User entity.
+ */
 @Entity
 @Table(name = "User", uniqueConstraints = {
     @UniqueConstraint(columnNames = "email")

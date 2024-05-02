@@ -13,6 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * Custom implementation of UserDetails representing user details retrieved from the database.
+ */
 @Builder
 @AllArgsConstructor
 @Getter
@@ -30,6 +33,10 @@ public class UserDetailsImpl implements UserDetails {
   @JsonIgnore
   private String password;  
   
+  /**
+   * Retrieves the authorities granted to the user.
+   * @return Collection of authorities.
+   */
   public Collection<? extends GrantedAuthority> getAuthorities() {        
       return new HashSet<GrantedAuthority>();
   }

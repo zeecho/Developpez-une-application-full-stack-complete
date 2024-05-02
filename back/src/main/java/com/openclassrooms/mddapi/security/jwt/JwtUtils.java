@@ -12,6 +12,9 @@ import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 
+/**
+ * Utility class for JWT operations such as generating, validating tokens, and extracting information.
+ */
 @Component
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
@@ -22,6 +25,12 @@ public class JwtUtils {
 	@Value("${oc.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
+	/**
+	 * Generates a JWT token from the provided authentication object.
+	 * 
+	 * @param authentication The authentication object.
+	 * @return The generated JWT token.
+	 */
 	public String generateJwtToken(Authentication authentication) {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -31,14 +40,32 @@ public class JwtUtils {
 				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
+	/**
+	 * Extracts the username from the provided JWT token.
+	 * 
+	 * @param token The JWT token.
+	 * @return The username extracted from the token.
+	 */
 	public String getUserNameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
+	/**
+	 * Extracts the email from the provided JWT token.
+	 * 
+	 * @param token The JWT token.
+	 * @return The email extracted from the token.
+	 */
 	public String getEmailFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("email", String.class);
 	}
 
+	/**
+	 * Validates the provided JWT token.
+	 * 
+	 * @param authToken The JWT token to validate.
+	 * @return True if the token is valid, false otherwise.
+	 */
 	public boolean validateJwtToken(String authToken) {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

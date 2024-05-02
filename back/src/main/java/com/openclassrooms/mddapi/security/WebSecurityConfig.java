@@ -18,6 +18,9 @@ import com.openclassrooms.mddapi.security.jwt.AuthEntryPointJwt;
 import com.openclassrooms.mddapi.security.jwt.AuthTokenFilter;
 import com.openclassrooms.mddapi.security.services.UserDetailsServiceImpl;
 
+/**
+ * Configures Spring Security settings.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -31,22 +34,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
 
+  /**
+   * Creates a bean for the authentication JWT token filter.
+   * 
+   * @return The authentication JWT token filter.
+   */
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
     return new AuthTokenFilter();
   }
 
+  
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
     authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
 
+  /**
+   * Creates a bean for the authentication manager.
+   * 
+   * @return The authentication manager.
+   * @throws Exception If an error occurs while creating the authentication manager.
+   */
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
   }
 
+  /**
+   * Creates a bean for the password encoder.
+   * 
+   * @return The password encoder.
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is a Spring Boot controller responsible for managing posts.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/posts")
@@ -33,6 +36,13 @@ public class PostController {
 	private final TopicService topicService;
 	private final UserService userService;
 
+    /**
+     * Constructor for PostController.
+     * @param postService The service for managing posts.
+     * @param postMapper The mapper for converting between Post and PostDto objects.
+     * @param topicService The service for managing topics.
+     * @param userService The service for managing users.
+     */
 	public PostController(PostService postService, PostMapper postMapper, TopicService topicService,
 			UserService userService) {
 		this.postService = postService;
@@ -41,11 +51,19 @@ public class PostController {
 		this.userService = userService;
 	}
 
+    /**
+     * GET method to retrieve all posts.
+     * @return List of PostDto objects.
+     */
 	@GetMapping
 	public List<PostDto> getAllPosts() {
 		return postService.getAllPosts();
 	}
 
+    /**
+     * GET method to retrieve posts for subscribed topics.
+     * @return ResponseEntity containing a list of PostDto objects.
+     */
 	@GetMapping("/subscribed")
 	public ResponseEntity<List<PostDto>> getPostsForSubscribedTopics() {
 		try {
@@ -64,6 +82,11 @@ public class PostController {
 		}
 	}
 
+    /**
+     * POST method to create a new post.
+     * @param postRequest The request containing the details of the post to create.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
 	@PostMapping("/create")
 	public ResponseEntity<?> createPost(@RequestBody CreatePostRequest postRequest) {
 		try {
@@ -86,6 +109,11 @@ public class PostController {
 		}
 	}
 
+    /**
+     * GET method to retrieve a post by its ID.
+     * @param postId The ID of the post to retrieve.
+     * @return ResponseEntity containing a PostDto object.
+     */
 	@GetMapping("/{postId}")
 	public ResponseEntity<PostDto> getPostById(@PathVariable("postId") Long postId) {
 		try {

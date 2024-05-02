@@ -23,6 +23,9 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 
+/**
+ * This class is a Spring Boot controller that handles user authentication and registration operations.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -32,6 +35,13 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    /**
+     * Constructor for AuthController class.
+     * @param authenticationManager The Spring Security authentication manager.
+     * @param passwordEncoder The Spring Security password encoder.
+     * @param jwtUtils The JWT utility for generating and validating JWT tokens.
+     * @param userRepository The user repository.
+     */
     AuthController(AuthenticationManager authenticationManager,
             PasswordEncoder passwordEncoder,
             JwtUtils jwtUtils,
@@ -42,6 +52,11 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * POST method for user authentication.
+     * @param loginRequest The login request containing user credentials.
+     * @return ResponseEntity containing the JWT token and details of the authenticated user.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -65,6 +80,11 @@ public class AuthController {
                 isAdmin));
     }
 
+    /**
+     * POST method for registering new users.
+     * @param signUpRequest The signup request containing user information to register.
+     * @return ResponseEntity containing a success or error message.
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {

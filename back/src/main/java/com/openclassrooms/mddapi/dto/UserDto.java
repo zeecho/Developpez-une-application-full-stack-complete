@@ -11,6 +11,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * This class represents a Data Transfer Object (DTO) for users.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

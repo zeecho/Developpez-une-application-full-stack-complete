@@ -2,6 +2,9 @@ package com.openclassrooms.mddapi.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * This class represents a request payload for creating a post.
+ */
 public class CreatePostRequest {
 	@NotBlank
 	private String title;

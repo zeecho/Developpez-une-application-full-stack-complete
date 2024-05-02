@@ -18,6 +18,9 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
+/**
+ * This class represents a Post entity.
+ */
 @Entity
 @Table(name = "Post")
 @Data

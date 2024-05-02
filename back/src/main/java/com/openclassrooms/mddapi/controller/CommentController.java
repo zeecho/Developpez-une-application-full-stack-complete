@@ -15,23 +15,41 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+/**
+ * This class is a Spring Boot controller responsible for managing comments.
+ */
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
     private final CommentService commentService;
     private final UserService userService;
     
+    /**
+     * Constructor for CommentController.
+     * @param commentService The service for managing comments.
+     * @param userService The service for managing users.
+     */
     public CommentController(CommentService commentService, UserService userService) {
         this.commentService = commentService;
         this.userService = userService;
     }
 
+    /**
+     * GET method to retrieve comments by post ID.
+     * @param postId The ID of the post to retrieve comments for.
+     * @return ResponseEntity containing a list of CommentDto objects.
+     */
     @GetMapping("/{postId}")
     public ResponseEntity<List<CommentDto>> getCommentsByPostId(@PathVariable("postId") Long postId) {
         List<CommentDto> comments = commentService.getCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
     }
 
+    /**
+     * POST method to add a new comment.
+     * @param commentRequest The request containing the details of the comment to add.
+     * @return ResponseEntity indicating success or failure of the operation.
+     */
     @PostMapping("/add")
     public ResponseEntity<?> addComment(@Valid @RequestBody CreateCommentRequest commentRequest) {
         try {

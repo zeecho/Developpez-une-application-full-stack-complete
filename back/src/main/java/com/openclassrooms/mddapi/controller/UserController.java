@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class is a Spring Boot controller responsible for managing users.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
@@ -19,12 +22,22 @@ public class UserController {
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor for UserController.
+     * @param userService The service for managing users.
+     * @param userMapper The mapper for converting between User and UserDto objects.
+     * @param passwordEncoder The password encoder.
+     */
 	public UserController(UserService userService, UserMapper userMapper, PasswordEncoder passwordEncoder) {
 		this.userMapper = userMapper;
 		this.userService = userService;
 		this.passwordEncoder = passwordEncoder;
 	}
 
+    /**
+     * GET method to retrieve the current user.
+     * @return ResponseEntity containing a UserDto object.
+     */
 	@GetMapping()
 	public ResponseEntity<?> getCurrentUser() {
 		try {
@@ -37,6 +50,11 @@ public class UserController {
 	}
 
 	// this could be used by admins in the future if needed
+    /**
+     * GET method to retrieve a user by their ID.
+     * @param id The ID of the user to retrieve.
+     * @return ResponseEntity containing a UserDto object.
+     */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") String id) {
 		try {
@@ -59,6 +77,11 @@ public class UserController {
 		}
 	}
 
+    /**
+     * PUT method to update the user's profile.
+     * @param updatedProfile The request containing updated profile information.
+     * @return ResponseEntity containing the updated UserDto object.
+     */
 	@PutMapping()
 	public ResponseEntity<?> updateProfile(@RequestBody UpdateProfileRequest updatedProfile) {
 		try {
@@ -74,6 +97,11 @@ public class UserController {
 		}
 	}
 
+    /**
+     * PUT method to update the user's password.
+     * @param updatedPassword The request containing the updated password information.
+     * @return ResponseEntity containing the updated UserDto object.
+     */
 	@PutMapping("/change-password")
 	public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordRequest updatedPassword) {
 		User loggedInUser = userService.getLoggedInUser();
@@ -91,26 +119,4 @@ public class UserController {
 			return ResponseEntity.badRequest().body("Erreur lors de la mise à jour du profil utilisateur");
 		}
 	}
-
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<?> save(@PathVariable("id") String id) {
-//        try {
-//            User user = this.userService.findById(Long.valueOf(id));
-//
-//            if (user == null) {
-//                return ResponseEntity.notFound().build();
-//            }
-//
-//            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//            if(!Objects.equals(userDetails.getUsername(), user.getEmail())) {
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//            }
-//
-//            this.userService.delete(Long.parseLong(id));
-//            return ResponseEntity.ok().build();
-//        } catch (NumberFormatException e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
 }

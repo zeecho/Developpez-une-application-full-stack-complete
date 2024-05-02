@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
+/**
+ * Service class for loading user-specific data.
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   UserRepository userRepository;
@@ -17,6 +20,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     this.userRepository = userRepository;
   }
   
+  /**
+   * Loads user-specific data by username or email.
+   * @param usernameOrEmail The username or email.
+   * @return UserDetails containing user-specific data.
+   * @throws UsernameNotFoundException If the user is not found.
+   */
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {

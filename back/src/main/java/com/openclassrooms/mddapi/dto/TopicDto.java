@@ -8,6 +8,9 @@ import lombok.NonNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+/**
+ * This class represents a Data Transfer Object (DTO) for topics.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

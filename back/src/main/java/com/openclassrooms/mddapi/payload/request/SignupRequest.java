@@ -4,6 +4,9 @@ import javax.validation.constraints.*;
 
 import lombok.Data;
 
+/**
+ * This class represents a request payload for user signup.
+ */
 @Data
 public class SignupRequest {
   @NotBlank

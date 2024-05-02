@@ -2,6 +2,9 @@ package com.openclassrooms.mddapi.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * This class represents a request payload for user login.
+ */
 public class LoginRequest {
 	@NotBlank
 	private String emailOrUsername;
