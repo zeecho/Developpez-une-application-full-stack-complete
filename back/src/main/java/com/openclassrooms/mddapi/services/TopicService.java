@@ -19,6 +19,11 @@ public class TopicService {
     
     private final UserRepository userRepository;
 
+    /**
+     * Constructs a TopicService with the specified TopicRepository and UserRepository.
+     * @param topicRepository The repository for managing topic entities.
+     * @param userRepository The repository for managing user entities.
+     */
     public TopicService(TopicRepository topicRepository, UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;

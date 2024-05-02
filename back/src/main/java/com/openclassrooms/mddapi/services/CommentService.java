@@ -25,6 +25,14 @@ public class CommentService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     
+    /**
+     * Constructs a CommentService with the specified repositories and mappers.
+     * 
+     * @param commentRepository The repository for managing comments.
+     * @param commentMapper The mapper for converting between comment entities and DTOs.
+     * @param postRepository The repository for managing posts.
+     * @param userRepository The repository for managing users.
+     */
     public CommentService(CommentRepository commentRepository, CommentMapper commentMapper, PostRepository postRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;

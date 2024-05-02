@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
+    /**
+     * Constructs a UserService with the specified UserRepository.
+     * @param userRepository The repository for managing user entities.
+     */
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

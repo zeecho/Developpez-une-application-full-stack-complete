@@ -12,10 +12,19 @@ public class ChangePasswordRequest {
 	@NotBlank
 	private String newPassword;
 
+	/**
+	 * Retrieves the old password from the request.
+	 * 
+	 * @return The old password.
+	 */
 	public String getOldPassword() {
 		return oldPassword;
 	}
-
+	/**
+	 * Retrieves the new password from the request.
+	 * 
+	 * @return The new password.
+	 */
 	public String getNewPassword() {
 		return newPassword;
 	}

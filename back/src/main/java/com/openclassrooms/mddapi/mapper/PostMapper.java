@@ -17,9 +17,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = "spring", uses = {UserService.class, TopicService.class})
 public abstract class PostMapper implements EntityMapper<PostDto, Post> {
-    @Autowired
+    /**
+     * Service for managing user-related operations.
+     */
+	@Autowired
     protected UserService userService;
     
+    /**
+     * Service for managing topic-related operations.
+     */
     @Autowired
     protected TopicService topicService;
 

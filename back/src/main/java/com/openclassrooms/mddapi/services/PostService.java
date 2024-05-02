@@ -19,6 +19,11 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
+    /**
+     * Constructs a PostService with the specified PostRepository and PostMapper.
+     * @param postRepository The repository for managing post entities.
+     * @param postMapper The mapper for converting between Post and PostDto.
+     */
     public PostService(PostRepository postRepository, PostMapper postMapper) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
