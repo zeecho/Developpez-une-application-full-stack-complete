@@ -1,0 +1,54 @@
+CREATE TABLE `User` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `email` VARCHAR(255),
+  `username` VARCHAR(255),
+  `password` VARCHAR(255),
+  `admin` BOOLEAN NOT NULL DEFAULT false,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+ALTER TABLE `User`
+ADD CONSTRAINT unique_email UNIQUE (email),
+ADD CONSTRAINT unique_username UNIQUE (username);
+
+CREATE TABLE `Topic` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `title` VARCHAR(255),
+  `description` VARCHAR(255),
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Subscriptions (
+  user_id INT,
+  topic_id INT,
+  FOREIGN KEY (user_id) REFERENCES User(id),
+  FOREIGN KEY (topic_id) REFERENCES Topic(id),
+  PRIMARY KEY (user_id, topic_id)
+);
+
+CREATE TABLE `Post` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    author_id INT NOT NULL,
+    topic_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES User(id),
+    FOREIGN KEY (topic_id) REFERENCES Topic(id)
+);
+
+
+CREATE TABLE `Comment` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    post_id INT,
+    user_id INT,
+    FOREIGN KEY (post_id) REFERENCES Post(id),
+    FOREIGN KEY (user_id) REFERENCES User(id)
+);
+
